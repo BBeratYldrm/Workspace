@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!--
+	<bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="username" value="root"></property>
+		<property name="password" value="godoro"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.driver"></property>
+		<property name="url" value="jdbc:mysql://localhot:3306/projedb"></property>
+	</bean>
+
+	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="username" value="root"></property>
+		<property name="password" value="godoro"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.driver"></property>
+		<property name="url" value="jdbc:mysql://localhot:3306/projedb"></property>
+	</bean>  
+	-->
+	
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="user" value="root"></property>
+		<property name="password" value="godoro"></property>
+		<property name="driverClass" value="com.mysql.jdbc.driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhot:3306/projedb"></property>
+	
+		<property name="minPoolSize" value="5"></property>
+		<property name="maxPoolSize" value="60"></property>
+		<property name="acquireIncrement" value="10"></property> <!-- Max bağlantı 100'e ulaşırsa bağlantı arttırma sayısı -->
+		<property name="maxStatements" value="100"></property> <!-- Önbelleğe alınacak sorgu sayısı -->
+		<property name="idleConnectionTestPeriod" value="300"></property>
+		<property name="maxIdleTime" value="900"></property> <!-- Boştaki bağlantı ne zaman kapatılsın -->	
+	</bean>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
+		<property name="dataSource" ref="comboPooledDataSource"></property>
+		<!-- <property name="pUnitName" ref="PersistencePU"></property>  -->
+	
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" ></bean>
+		</property>
+	
+		<property name="packagesToScan" value="com.berat.model"></property> <!-- Aranacak Paketler -->
+		
+		<property name="jpaProperties">
+			<props> 
+				<prop key="hibernate.show.sql">true</prop>
+				<prop key="hibernate.format.sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+			</props>	
+		</property>
+	
+	</bean>	
+	
+	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" >
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="jpaTransactionManager"/> <!-- Transaction yönetimi springe devredildi. -->
+	
+	
+	
+
+</beans>

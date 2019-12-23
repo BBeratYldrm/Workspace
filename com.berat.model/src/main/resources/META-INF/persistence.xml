@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" 
+xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+<persistence-unit name="PersistencePU" transaction-type="RESOURCE_LOCAL">
+
+  <class>com.berat.domain.employee.Department</class>
+  <class>com.berat.domain.employee.Employee</class>
+  <class>com.berat.domain.employee.Job</class>
+  <class>com.berat.domain.employee.Location</class>
+  <class>com.berat.domain.user.PasswordResetToken</class>
+  <class>com.berat.domain.user.Privilege</class>
+  <class>com.berat.domain.user.Role</class>
+  <class>com.berat.domain.user.User</class>
+  <class>com.berat.domain.user.VerificationToken</class>
+  
+
+        <properties>
+                
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projedb" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="godoro" />
+  
+            <property name="hibernate.show.sql" value="true"/>
+            <property name="hibernate.format.sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>   <!-- Çalışma Biçimi -->       
+            <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider"/>           
+            <property name="hibernate.c3p0.min_size" value="5"/> <!-- Min 1 Default -->
+            <property name="hibernate.c3p0.max_size" value="50"/> <!-- Max 100 -->
+            <property name="hibernate.c3p0.acquire_increment" value="5"/>
+            <property name="hibernate.c3p0.timeout" value="600"/> <!-- Kurulamayan bağlantının ne zaman kaldırılacağı -->
+            <property name="hibernate.c3p0.max_statements" value="50"/> <!-- Önbelleğe alınacak query sayısı -->
+            <property name="hibernate.c3p0.idle_test_period" value="2000"/> <!-- Belli periodlarda bağlantı kontrolü -->
+        
+        </properties>
+   
+   
+    </persistence-unit>
+</persistence>
